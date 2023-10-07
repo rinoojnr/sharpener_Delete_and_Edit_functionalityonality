@@ -1,9 +1,11 @@
 var form = document.getElementById("addForm");
 var itemList =document.getElementById("items");
+var filter =document.getElementById('filter');
 
 //Form submit event
 form.addEventListener('submit',addItem);
 itemList.addEventListener('click',removeLi);
+filter.addEventListener('keyup',FilterList);
 
 function addItem(e){
     e.preventDefault();
@@ -22,7 +24,6 @@ function addItem(e){
     buttton.appendChild(document.createTextNode('X'))
     li.appendChild(buttton)
     itemList.appendChild(li)
-    
 }
 function removeLi(e){
     if(e.target.classList.contains('delete')){
@@ -30,6 +31,19 @@ function removeLi(e){
             var rem = e.target.parentElement;
             itemList.removeChild(rem);
         }
-        console.log("hhh")
     }
+}
+
+function FilterList(e){
+    var text =e.target.value.toLowerCase()
+    var itemList =document.getElementsByTagName('li')
+    Array.from(itemList).forEach(function(item){
+        var itemName = item.firstChild.textContent;
+        if(itemName.toLowerCase().indexOf(text)!=-1){
+            item.style.display='block'
+        }else{
+            item.style.display='none'
+        }
+    })
+    
 }
